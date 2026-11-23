@@ -7,6 +7,9 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.facebook.react.viewmanagers.RNMBXHeatmapLayerManagerInterface
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXHeatmapLayerManagerDelegate
+import com.rnmapbox.rnmbx.utils.extensions.asBooleanOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asDoubleOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asMapOrNull
 import com.rnmapbox.rnmbx.utils.extensions.asStringOrNull
 
 class RNMBXHeatmapLayerManager : ViewGroupManager<RNMBXHeatmapLayer>(),
@@ -31,12 +34,12 @@ class RNMBXHeatmapLayerManager : ViewGroupManager<RNMBXHeatmapLayer>(),
 
     @ReactProp(name = "existing")
     override fun setExisting(layer: RNMBXHeatmapLayer, existing: Dynamic) {
-        layer.setExisting(existing.asBoolean())
+        layer.setExisting(existing.asBooleanOrNull())
     }
 
     @ReactProp(name = "sourceID")
     override fun setSourceID(layer: RNMBXHeatmapLayer, sourceID: Dynamic) {
-        layer.setSourceID(sourceID.asString())
+        layer.setSourceID(sourceID.asStringOrNull())
     }
 
     @ReactProp(name = "aboveLayerID")
@@ -51,22 +54,22 @@ class RNMBXHeatmapLayerManager : ViewGroupManager<RNMBXHeatmapLayer>(),
 
     @ReactProp(name = "layerIndex")
     override fun setLayerIndex(layer: RNMBXHeatmapLayer, layerIndex: Dynamic) {
-        layer.setLayerIndex(layerIndex.asInt())
+        layer.setLayerIndex(if (layerIndex.isNull) null else layerIndex.asInt())
     }
 
     @ReactProp(name = "minZoomLevel")
     override fun setMinZoomLevel(layer: RNMBXHeatmapLayer, minZoomLevel: Dynamic) {
-        layer.setMinZoomLevel(minZoomLevel.asDouble())
+        layer.setMinZoomLevel(minZoomLevel.asDoubleOrNull())
     }
 
     @ReactProp(name = "maxZoomLevel")
     override fun setMaxZoomLevel(layer: RNMBXHeatmapLayer, maxZoomLevel: Dynamic) {
-        layer.setMaxZoomLevel(maxZoomLevel.asDouble())
+        layer.setMaxZoomLevel(maxZoomLevel.asDoubleOrNull())
     }
 
     @ReactProp(name = "reactStyle")
     override fun setReactStyle(layer: RNMBXHeatmapLayer, style: Dynamic) {
-        layer.setReactStyle(style.asMap())
+        layer.setReactStyle(style.asMapOrNull())
     }
 
     @ReactProp(name = "sourceLayerID")
@@ -76,7 +79,7 @@ class RNMBXHeatmapLayerManager : ViewGroupManager<RNMBXHeatmapLayer>(),
 
     @ReactProp(name = "filter")
     override fun setFilter(layer: RNMBXHeatmapLayer, filterList: Dynamic) {
-        layer.setFilter(filterList.asArray())
+        layer.setFilter(if (filterList.isNull) null else filterList.asArray())
     }
 
     @ReactProp(name = "slot")

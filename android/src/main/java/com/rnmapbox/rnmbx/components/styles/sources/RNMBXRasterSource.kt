@@ -22,7 +22,7 @@ class RNMBXRasterSource(context: Context?) : RNMBXTileSource<RasterSource?>(cont
         return builder.build()
     }
 
-    fun setTileSize(tileSize: Int) {
+    fun setTileSize(tileSize: Int?) {
         mTileSize = tileSize
     }
 
@@ -50,7 +50,7 @@ class RNMBXRasterSource(context: Context?) : RNMBXTileSource<RasterSource?>(cont
         const val DEFAULT_TILE_SIZE = 512
     }
 
-    fun setSourceBounds(value: Array<Double>) {
+    fun setSourceBounds(value: Array<Double>?) {
         bounds = value
     }
 }

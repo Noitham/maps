@@ -7,6 +7,7 @@ import com.facebook.react.bridge.ReadableType
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.rnmapbox.rnmbx.components.AbstractEventEmitter
 import com.rnmapbox.rnmbx.utils.Logger
+import com.rnmapbox.rnmbx.utils.extensions.asStringOrNull
 
 abstract class RNMBXTileSourceManager<T : RNMBXTileSource<*>> internal constructor(
     reactApplicationContext: ReactApplicationContext
@@ -34,14 +35,14 @@ abstract class RNMBXTileSourceManager<T : RNMBXTileSource<*>> internal construct
 
     @ReactProp(name = "url")
     fun setUrl(source: T, url: Dynamic) {
-        source.uRL = url.asString()
+        source.uRL = url.asStringOrNull()
     }
 
     @ReactProp(name = "tileUrlTemplates")
     fun setTileUrlTemplates(source: T, tileUrlTemplates: Dynamic) {
-        val array = tileUrlTemplates.asArray()
+        val array = if (tileUrlTemplates.isNull) null else tileUrlTemplates.asArray()
         if (array == null) {
-            Logger.e("RNMBXTileSourceManager", "tileUrlTemplates array is null")
+            source.tileUrlTemplates = ArrayList()
             return
         }
         val urls: MutableList<String> = ArrayList()
@@ -55,21 +56,21 @@ abstract class RNMBXTileSourceManager<T : RNMBXTileSource<*>> internal construct
 
     @ReactProp(name = "attribution")
     fun setAttribution(source: T, attribution: Dynamic) {
-        source!!.attribution = attribution.asString()
+        source!!.attribution = attribution.asStringOrNull()
     }
 
     @ReactProp(name = "minZoomLevel")
     fun setMinZoomLevel(source: T, minZoomLevel: Dynamic) {
-        source!!.minZoomLevel = minZoomLevel.asInt()
+        source!!.minZoomLevel = if (minZoomLevel.isNull) null else minZoomLevel.asInt()
     }
 
     @ReactProp(name = "maxZoomLevel")
     fun setMaxZoomLevel(source: T, maxZoomLevel: Dynamic) {
-        source!!.maxZoomLevel = maxZoomLevel.asInt()
+        source!!.maxZoomLevel = if (maxZoomLevel.isNull) null else maxZoomLevel.asInt()
     }
 
     @ReactProp(name = "tms")
     fun setTms(source: T, tms: Dynamic) {
-        source!!.tMS = tms.asBoolean()
+        source!!.tMS = !tms.isNull && tms.asBoolean()
     }
 }

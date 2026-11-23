@@ -807,8 +807,8 @@ open class RNMBXMapView(private val mContext: Context, var mManager: RNMBXMapVie
         workaroundToRelayoutChildOfMapView()
     }
 
-    fun setReactPreferredFramesPerSecond(preferredFramesPerSecond: Int) {
-        if (ownsMap && this::mMapView.isInitialized) {
+    fun setReactPreferredFramesPerSecond(preferredFramesPerSecond: Int?) {
+        if (preferredFramesPerSecond != null && ownsMap && this::mMapView.isInitialized) {
             mMapView.setMaximumFps(preferredFramesPerSecond)
         }
     }
@@ -1691,7 +1691,7 @@ open class RNMBXMapView(private val mContext: Context, var mManager: RNMBXMapVie
     var mCompassSettings = OrnamentSettings(enabled = false)
     var mCompassFadeWhenNorth = false
 
-    fun setReactCompassEnabled(compassEnabled: Boolean) {
+    fun setReactCompassEnabled(compassEnabled: Boolean?) {
         mCompassSettings.enabled = compassEnabled
         changes.add(Property.COMPASS)
     }
@@ -1701,7 +1701,7 @@ open class RNMBXMapView(private val mContext: Context, var mManager: RNMBXMapVie
         changes.add(Property.COMPASS)
     }
 
-    fun setReactCompassViewMargins(compassViewMargins: ReadableMap) {
+    fun setReactCompassViewMargins(compassViewMargins: ReadableMap?) {
         mCompassSettings.margins = compassViewMargins
         changes.add(Property.COMPASS)
     }
@@ -1711,7 +1711,7 @@ open class RNMBXMapView(private val mContext: Context, var mManager: RNMBXMapVie
         changes.add(Property.COMPASS)
     }
 
-    fun setReactCompassPosition(compassPosition: ReadableMap) {
+    fun setReactCompassPosition(compassPosition: ReadableMap?) {
         mCompassSettings.setPosAndMargins(compassPosition)
         changes.add(Property.COMPASS)
     }
@@ -1751,12 +1751,12 @@ open class RNMBXMapView(private val mContext: Context, var mManager: RNMBXMapVie
     var mScaleBarSettings = OrnamentSettings(enabled = false)
     var mScaleBarUnits: String? = null
 
-    fun setReactScaleBarEnabled(scaleBarEnabled: Boolean) {
+    fun setReactScaleBarEnabled(scaleBarEnabled: Boolean?) {
         mScaleBarSettings.enabled = scaleBarEnabled
         changes.add(Property.SCALEBAR)
     }
 
-    fun setReactScaleBarViewMargins(scaleBarMargins: ReadableMap) {
+    fun setReactScaleBarViewMargins(scaleBarMargins: ReadableMap?) {
         mScaleBarSettings.margins = scaleBarMargins
         changes.add(Property.SCALEBAR)
     }
@@ -1766,7 +1766,7 @@ open class RNMBXMapView(private val mContext: Context, var mManager: RNMBXMapVie
         changes.add(Property.SCALEBAR)
     }
 
-    fun setReactScaleBarPosition(scaleBarPosition: ReadableMap) {
+    fun setReactScaleBarPosition(scaleBarPosition: ReadableMap?) {
         mScaleBarSettings.setPosAndMargins(scaleBarPosition)
         changes.add(Property.SCALEBAR)
     }
@@ -1840,7 +1840,7 @@ open class RNMBXMapView(private val mContext: Context, var mManager: RNMBXMapVie
         changes.add(Property.ATTRIBUTION)
     }
 
-    fun setReactAttributionViewMargins(margins: ReadableMap) {
+    fun setReactAttributionViewMargins(margins: ReadableMap?) {
         mAttributionSettings.margins = margins
         changes.add(Property.ATTRIBUTION)
     }

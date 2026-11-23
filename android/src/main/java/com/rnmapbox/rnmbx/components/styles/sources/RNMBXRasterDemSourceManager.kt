@@ -7,6 +7,7 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.facebook.react.viewmanagers.RNMBXRasterDemSourceManagerInterface
 import com.rnmapbox.rnmbx.utils.Logger
+import com.rnmapbox.rnmbx.utils.extensions.asBooleanOrNull
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXRasterDemSourceManagerDelegate
 
@@ -40,11 +41,11 @@ class RNMBXRasterDemSourceManager(private val mContext: ReactApplicationContext)
 
     @ReactProp(name = "existing")
     override fun setExisting(view: RNMBXRasterDemSource, value: Dynamic) {
-        view.mExisting = value.asBoolean()
+        view.mExisting = value.asBooleanOrNull()
     }
 
     @ReactProp(name = "tileSize")
     override fun setTileSize(view: RNMBXRasterDemSource, value: Dynamic) {
-        view.setTileSize(value.asInt())
+        view.setTileSize(if (value.isNull) null else value.asInt())
     }
 }

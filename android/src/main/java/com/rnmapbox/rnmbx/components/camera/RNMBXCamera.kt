@@ -159,7 +159,12 @@ class RNMBXCamera(private val mContext: Context, private val mManager: RNMBXCame
         _updateViewportState();
     }
 
-    fun setFollowPadding(padding: ReadableMap) {
+    fun setFollowPadding(padding: ReadableMap?) {
+        if (padding == null) {
+            mFollowPadding = null
+            _updateViewportState()
+            return
+        }
         // scale padding by pixel ratio
         val metrics = context.resources.displayMetrics
         val edgeInsets = EdgeInsets(

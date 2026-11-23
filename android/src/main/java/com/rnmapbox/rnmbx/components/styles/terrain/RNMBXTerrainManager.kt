@@ -8,6 +8,7 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.facebook.react.viewmanagers.RNMBXTerrainManagerInterface
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXTerrainManagerDelegate
+import com.rnmapbox.rnmbx.utils.extensions.asStringOrNull
 
 class RNMBXTerrainManager : ViewGroupManager<RNMBXTerrain>(),
     RNMBXTerrainManagerInterface<RNMBXTerrain> {
@@ -25,7 +26,7 @@ class RNMBXTerrainManager : ViewGroupManager<RNMBXTerrain>(),
 
     @ReactProp(name = "sourceID")
     override fun setSourceID(layer: RNMBXTerrain, sourceID: Dynamic) {
-        layer.setSourceID(sourceID.asString())
+        layer.setSourceID(sourceID.asStringOrNull())
     }
 
     @ReactProp(name = "reactStyle")

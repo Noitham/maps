@@ -7,6 +7,9 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.facebook.react.viewmanagers.RNMBXHillshadeLayerManagerInterface
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXHillshadeLayerManagerDelegate
+import com.rnmapbox.rnmbx.utils.extensions.asBooleanOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asDoubleOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asMapOrNull
 import com.rnmapbox.rnmbx.utils.extensions.asStringOrNull
 
 class RNMBXHillshadeLayerManager : ViewGroupManager<RNMBXHillshadeLayer>(),
@@ -31,12 +34,12 @@ class RNMBXHillshadeLayerManager : ViewGroupManager<RNMBXHillshadeLayer>(),
 
     @ReactProp(name = "existing")
     override fun setExisting(layer: RNMBXHillshadeLayer, existing: Dynamic) {
-        layer.setExisting(existing.asBoolean())
+        layer.setExisting(existing.asBooleanOrNull())
     }
 
     @ReactProp(name = "sourceID")
     override fun setSourceID(layer: RNMBXHillshadeLayer, sourceID: Dynamic) {
-        layer.setSourceID(sourceID.asString())
+        layer.setSourceID(sourceID.asStringOrNull())
     }
 
     @ReactProp(name = "aboveLayerID")
@@ -51,22 +54,22 @@ class RNMBXHillshadeLayerManager : ViewGroupManager<RNMBXHillshadeLayer>(),
 
     @ReactProp(name = "layerIndex")
     override fun setLayerIndex(layer: RNMBXHillshadeLayer, layerIndex: Dynamic) {
-        layer.setLayerIndex(layerIndex.asInt())
+        layer.setLayerIndex(if (layerIndex.isNull) null else layerIndex.asInt())
     }
 
     @ReactProp(name = "minZoomLevel")
     override fun setMinZoomLevel(layer: RNMBXHillshadeLayer, minZoomLevel: Dynamic) {
-        layer.setMinZoomLevel(minZoomLevel.asDouble())
+        layer.setMinZoomLevel(minZoomLevel.asDoubleOrNull())
     }
 
     @ReactProp(name = "maxZoomLevel")
     override fun setMaxZoomLevel(layer: RNMBXHillshadeLayer, maxZoomLevel: Dynamic) {
-        layer.setMaxZoomLevel(maxZoomLevel.asDouble())
+        layer.setMaxZoomLevel(maxZoomLevel.asDoubleOrNull())
     }
 
     @ReactProp(name = "reactStyle")
     override fun setReactStyle(layer: RNMBXHillshadeLayer, style: Dynamic) {
-        layer.setReactStyle(style.asMap())
+        layer.setReactStyle(style.asMapOrNull())
     }
 
     @ReactProp(name = "sourceLayerID")
@@ -76,7 +79,7 @@ class RNMBXHillshadeLayerManager : ViewGroupManager<RNMBXHillshadeLayer>(),
 
     @ReactProp(name = "filter")
     override fun setFilter(layer: RNMBXHillshadeLayer, filterList: Dynamic) {
-        layer.setFilter(filterList.asArray())
+        layer.setFilter(if (filterList.isNull) null else filterList.asArray())
     }
 
     @ReactProp(name = "slot")

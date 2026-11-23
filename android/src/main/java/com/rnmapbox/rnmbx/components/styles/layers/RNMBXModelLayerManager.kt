@@ -8,6 +8,9 @@ import com.facebook.react.viewmanagers.RNMBXModelLayerManagerInterface
 import com.rnmapbox.rnmbx.utils.Logger
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXModelLayerManagerDelegate
+import com.rnmapbox.rnmbx.utils.extensions.asBooleanOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asDoubleOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asMapOrNull
 import com.rnmapbox.rnmbx.utils.extensions.asStringOrNull
 
 
@@ -33,12 +36,12 @@ class RNMBXModelLayerManager : ViewGroupManager<RNMBXModelLayer>(),
 
     @ReactProp(name = "existing")
     override fun setExisting(layer: RNMBXModelLayer, existing: Dynamic) {
-        layer.setExisting(existing.asBoolean())
+        layer.setExisting(existing.asBooleanOrNull())
     }
 
     @ReactProp(name = "sourceID")
     override fun setSourceID(layer: RNMBXModelLayer, sourceID: Dynamic) {
-        layer.setSourceID(sourceID.asString())
+        layer.setSourceID(sourceID.asStringOrNull())
     }
 
     @ReactProp(name = "aboveLayerID")
@@ -53,22 +56,22 @@ class RNMBXModelLayerManager : ViewGroupManager<RNMBXModelLayer>(),
 
     @ReactProp(name = "layerIndex")
     override fun setLayerIndex(layer: RNMBXModelLayer, layerIndex: Dynamic) {
-        layer.setLayerIndex(layerIndex.asInt())
+        layer.setLayerIndex(if (layerIndex.isNull) null else layerIndex.asInt())
     }
 
     @ReactProp(name = "minZoomLevel")
     override fun setMinZoomLevel(layer: RNMBXModelLayer, minZoomLevel: Dynamic) {
-        layer.setMinZoomLevel(minZoomLevel.asDouble())
+        layer.setMinZoomLevel(minZoomLevel.asDoubleOrNull())
     }
 
     @ReactProp(name = "maxZoomLevel")
     override fun setMaxZoomLevel(layer: RNMBXModelLayer, maxZoomLevel: Dynamic) {
-        layer.setMaxZoomLevel(maxZoomLevel.asDouble())
+        layer.setMaxZoomLevel(maxZoomLevel.asDoubleOrNull())
     }
 
     @ReactProp(name = "reactStyle")
     override fun setReactStyle(layer: RNMBXModelLayer, style: Dynamic) {
-        layer.setReactStyle(style.asMap())
+        layer.setReactStyle(style.asMapOrNull())
     }
 
     @ReactProp(name = "sourceLayerID")
@@ -78,7 +81,7 @@ class RNMBXModelLayerManager : ViewGroupManager<RNMBXModelLayer>(),
 
     @ReactProp(name = "filter")
     override fun setFilter(layer: RNMBXModelLayer, filterList: Dynamic) {
-        layer.setFilter(filterList.asArray())
+        layer.setFilter(if (filterList.isNull) null else filterList.asArray())
     }
 
     @ReactProp(name = "slot")

@@ -7,6 +7,9 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.facebook.react.viewmanagers.RNMBXLineLayerManagerInterface
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXLineLayerManagerDelegate
+import com.rnmapbox.rnmbx.utils.extensions.asBooleanOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asDoubleOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asMapOrNull
 import com.rnmapbox.rnmbx.utils.extensions.asStringOrNull
 
 class RNMBXLineLayerManager : ViewGroupManager<RNMBXLineLayer>(),
@@ -31,12 +34,12 @@ class RNMBXLineLayerManager : ViewGroupManager<RNMBXLineLayer>(),
 
     @ReactProp(name = "existing")
     override fun setExisting(layer: RNMBXLineLayer, existing: Dynamic) {
-        layer.setExisting(existing.asBoolean())
+        layer.setExisting(existing.asBooleanOrNull())
     }
 
     @ReactProp(name = "sourceID")
     override fun setSourceID(layer: RNMBXLineLayer, sourceID: Dynamic) {
-        layer.setSourceID(sourceID.asString())
+        layer.setSourceID(sourceID.asStringOrNull())
     }
 
     @ReactProp(name = "aboveLayerID")
@@ -51,22 +54,22 @@ class RNMBXLineLayerManager : ViewGroupManager<RNMBXLineLayer>(),
 
     @ReactProp(name = "layerIndex")
     override fun setLayerIndex(layer: RNMBXLineLayer, layerIndex: Dynamic) {
-        layer.setLayerIndex(layerIndex.asInt())
+        layer.setLayerIndex(if (layerIndex.isNull) null else layerIndex.asInt())
     }
 
     @ReactProp(name = "minZoomLevel")
     override fun setMinZoomLevel(layer: RNMBXLineLayer, minZoomLevel: Dynamic) {
-        layer.setMinZoomLevel(minZoomLevel.asDouble())
+        layer.setMinZoomLevel(minZoomLevel.asDoubleOrNull())
     }
 
     @ReactProp(name = "maxZoomLevel")
     override fun setMaxZoomLevel(layer: RNMBXLineLayer, maxZoomLevel: Dynamic) {
-        layer.setMaxZoomLevel(maxZoomLevel.asDouble())
+        layer.setMaxZoomLevel(maxZoomLevel.asDoubleOrNull())
     }
 
     @ReactProp(name = "reactStyle")
     override fun setReactStyle(layer: RNMBXLineLayer, style: Dynamic) {
-        layer.setReactStyle(style.asMap())
+        layer.setReactStyle(style.asMapOrNull())
     }
 
     @ReactProp(name = "sourceLayerID")
@@ -76,7 +79,7 @@ class RNMBXLineLayerManager : ViewGroupManager<RNMBXLineLayer>(),
 
     @ReactProp(name = "filter")
     override fun setFilter(layer: RNMBXLineLayer, filterList: Dynamic) {
-        layer.setFilter(filterList.asArray())
+        layer.setFilter(if (filterList.isNull) null else filterList.asArray())
     }
 
     @ReactProp(name = "slot")

@@ -144,7 +144,7 @@ class RNMBXImagesManager(private val mContext: ReactApplicationContext) :
 
     @ReactProp(name = "hasOnImageMissing")
     override fun setHasOnImageMissing(images: RNMBXImages, value: Dynamic) {
-        images.setHasOnImageMissing(value.asBoolean())
+        images.setHasOnImageMissing(!value.isNull && value.asBoolean())
     }
 
     private fun convertDrawableToBitmap(sourceDrawable: Drawable?): BitmapDrawable? {

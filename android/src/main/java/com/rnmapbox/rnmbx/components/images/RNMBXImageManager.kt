@@ -12,6 +12,8 @@ import com.rnmapbox.rnmbx.components.styles.sources.RNMBXShapeSource
 import com.rnmapbox.rnmbx.utils.ViewTagResolver
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXImageManagerDelegate
+import com.rnmapbox.rnmbx.utils.extensions.asDoubleOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asStringOrNull
 
 class RNMBXImageManager(private val mContext: ReactApplicationContext, val viewTagResolver: ViewTagResolver) : AbstractEventEmitter<RNMBXImage>(
 mContext
@@ -64,12 +66,12 @@ mContext
     // region React properties
     @ReactProp(name="name")
     override fun setName(image: RNMBXImage, value: Dynamic) {
-        image.name = value.asString()
+        image.name = value.asStringOrNull()
     }
 
     @ReactProp(name="sdf")
     override fun setSdf(image: RNMBXImage, value: Dynamic) {
-        image.sdf = value.asBoolean()
+        image.sdf = !value.isNull && value.asBoolean()
     }
 
     @ReactProp(name="stretchX")
@@ -89,7 +91,7 @@ mContext
 
     @ReactProp(name="scale")
     override fun setScale(image: RNMBXImage, value: Dynamic) {
-        image.scale = value.asDouble()
+        image.scale = value.asDoubleOrNull() ?: 1.0
     }
     // endregion
 }

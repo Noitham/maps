@@ -17,6 +17,9 @@ import com.rnmapbox.rnmbx.utils.ExpressionParser
 import com.rnmapbox.rnmbx.utils.Logger
 import com.rnmapbox.rnmbx.utils.ViewTagResolver
 import com.rnmapbox.rnmbx.utils.extensions.asDoubleOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asBooleanOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asMapOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asStringOrNull
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.ArrayList
@@ -75,13 +78,13 @@ class RNMBXShapeSourceManager(private val mContext: ReactApplicationContext, val
 
     @ReactProp(name = "existing")
     override fun setExisting(source: RNMBXShapeSource, existing: Dynamic) {
-        source.mExisting = existing.asBoolean()
+        source.mExisting = existing.asBooleanOrNull()
     }
 
     @ReactProp(name = "url")
     override fun setUrl(source: RNMBXShapeSource, urlStr: Dynamic) {
         try {
-            source.setURL(URL(urlStr.asString()))
+            source.setURL(urlStr.asStringOrNull()?.let { URL(it) })
         } catch (e: MalformedURLException) {
             Logger.w(LOG_TAG, e.localizedMessage ?: "Unknown URL error")
         }
@@ -89,17 +92,12 @@ class RNMBXShapeSourceManager(private val mContext: ReactApplicationContext, val
 
     @ReactProp(name = "shape")
     override fun setShape(source: RNMBXShapeSource, geoJSONStr: Dynamic) {
-        val str = geoJSONStr.asString()
-        if (str == null) {
-            Logger.e(LOG_TAG, "shape string is null")
-            return
-        }
-        source.setShape(str)
+        source.setShape(geoJSONStr.asStringOrNull())
     }
 
     @ReactProp(name = "cluster")
     override fun setCluster(source: RNMBXShapeSource, cluster: Dynamic) {
-        source.setCluster(cluster.asInt() == 1)
+        source.setCluster(!cluster.isNull && cluster.asInt() == 1)
     }
 
     @ReactProp(name = "clusterRadius")
@@ -194,17 +192,12 @@ class RNMBXShapeSourceManager(private val mContext: ReactApplicationContext, val
 
     @ReactProp(name = "hasPressListener")
     override fun setHasPressListener(source: RNMBXShapeSource, hasPressListener: Dynamic) {
-        source.setHasPressListener(hasPressListener.asBoolean())
+        source.setHasPressListener(!hasPressListener.isNull && hasPressListener.asBoolean())
     }
 
     @ReactProp(name = "hitbox")
     override fun setHitbox(source: RNMBXShapeSource, map: Dynamic) {
-        val mapValue = map.asMap()
-        if (mapValue == null) {
-            Logger.e(LOG_TAG, "hitbox map is null")
-            return
-        }
-        source.setHitbox(mapValue)
+        source.setHitbox(map.asMapOrNull())
     }
 
     override fun customEvents(): Map<String, String>? {

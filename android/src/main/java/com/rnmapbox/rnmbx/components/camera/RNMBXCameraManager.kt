@@ -17,6 +17,7 @@ import com.rnmapbox.rnmbx.rncompat.dynamic.*
 import com.rnmapbox.rnmbx.utils.Logger
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXCameraManagerDelegate
+import com.rnmapbox.rnmbx.utils.extensions.asMapOrNull
 
 class RNMBXCameraManager(private val mContext: ReactApplicationContext, val viewTagResolver: ViewTagResolver) :
     AbstractEventEmitter<RNMBXCamera>(
@@ -112,12 +113,7 @@ class RNMBXCameraManager(private val mContext: ReactApplicationContext, val view
 
     @ReactProp(name = "followPadding")
     override fun setFollowPadding(camera: RNMBXCamera, value: Dynamic) {
-        val mapValue = value.asMap()
-        if (mapValue == null) {
-            Logger.e("RNMBXCameraManager", "followPadding map is null")
-            return
-        }
-        camera.setFollowPadding(mapValue)
+        camera.setFollowPadding(value.asMapOrNull())
     }
 
     @ReactProp(name = "maxBounds")

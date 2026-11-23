@@ -99,16 +99,21 @@ class RNMBXShapeSource(context: Context, private val mManager: RNMBXShapeSourceM
         }
     }
 
-    fun setURL(url: URL) {
+    fun setURL(url: URL?) {
         mURL = url
-        if (mSource != null && mMapView != null && !mMapView!!.isDestroyed) {
+        if (url != null && mSource != null && mMapView != null && !mMapView!!.isDestroyed) {
             mMap?.getStyle()?.let { applySourceData(it, url.toString()) }
         }
     }
 
-    fun setShape(geoJSONStr: String) {
+    fun setShape(geoJSONStr: String?) {
         mShapeAnimator?.unsubscribe(this)
         mShapeAnimator = null
+
+        if (geoJSONStr == null) {
+            mShape = null
+            return
+        }
 
         val shapeAnimatorManager = mManager.shapeAnimatorManager
         if (shapeAnimatorManager.isShapeAnimatorTag(geoJSONStr)) {

@@ -81,12 +81,12 @@ abstract class RNMBXLayer<T : Layer?>(protected var mContext: Context) : Abstrac
         }
     }
 
-    fun setLayerIndex(layerIndex: Int) {
+    fun setLayerIndex(layerIndex: Int?) {
         if (mLayerIndex != null && mLayerIndex == layerIndex) {
             return
         }
         mLayerIndex = layerIndex
-        if (mLayer != null) {
+        if (layerIndex != null && mLayer != null) {
             removeFromMap(mMapView!!,RemovalReason.REORDER)
             addAtIndex(layerIndex)
         }
@@ -99,16 +99,16 @@ abstract class RNMBXLayer<T : Layer?>(protected var mContext: Context) : Abstrac
         }
     }
 
-    fun setMinZoomLevel(minZoomLevel: Double) {
+    fun setMinZoomLevel(minZoomLevel: Double?) {
         mMinZoomLevel = minZoomLevel
-        if (mLayer != null) {
+        if (minZoomLevel != null && mLayer != null) {
             mLayer!!.minZoom(minZoomLevel.toFloat().toDouble())
         }
     }
 
-    fun setMaxZoomLevel(maxZoomLevel: Double) {
+    fun setMaxZoomLevel(maxZoomLevel: Double?) {
         mMaxZoomLevel = maxZoomLevel
-        mLayer?.let {
+        if (maxZoomLevel != null) mLayer?.let {
            it.maxZoom(maxZoomLevel.toFloat().toDouble())
         }
     }
@@ -140,7 +140,7 @@ abstract class RNMBXLayer<T : Layer?>(protected var mContext: Context) : Abstrac
         applySlot()
     }
 
-    fun setExisting(existing: Boolean) {
+    fun setExisting(existing: Boolean?) {
         mExisting = existing
     }
 

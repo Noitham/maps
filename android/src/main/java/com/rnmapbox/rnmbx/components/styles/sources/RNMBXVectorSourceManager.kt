@@ -9,6 +9,8 @@ import com.facebook.react.viewmanagers.RNMBXVectorSourceManagerInterface
 import com.rnmapbox.rnmbx.events.constants.EventKeys
 import com.rnmapbox.rnmbx.events.constants.eventMapOf
 import com.rnmapbox.rnmbx.utils.Logger
+import com.rnmapbox.rnmbx.utils.extensions.asBooleanOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asMapOrNull
 import javax.annotation.Nonnull
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXVectorSourceManagerDelegate
@@ -32,17 +34,12 @@ class RNMBXVectorSourceManager(reactApplicationContext: ReactApplicationContext)
 
     @ReactProp(name = "hasPressListener")
     override fun setHasPressListener(source: RNMBXVectorSource, hasPressListener: Dynamic) {
-        source.setHasPressListener(hasPressListener.asBoolean())
+        source.setHasPressListener(!hasPressListener.isNull && hasPressListener.asBoolean())
     }
 
     @ReactProp(name = "hitbox")
     override fun setHitbox(source: RNMBXVectorSource, map: Dynamic) {
-        val mapValue = map.asMap()
-        if (mapValue == null) {
-            Logger.e("RNMBXVectorSourceManager", "hitbox map is null")
-            return
-        }
-        source.setHitbox(mapValue)
+        source.setHitbox(map.asMapOrNull())
     }
 
     @ReactProp(name = "promoteId")
@@ -52,7 +49,7 @@ class RNMBXVectorSourceManager(reactApplicationContext: ReactApplicationContext)
 
     @ReactProp(name = "existing")
     override fun setExisting(view: RNMBXVectorSource, value: Dynamic) {
-        view.mExisting = value.asBoolean()
+        view.mExisting = value.asBooleanOrNull()
     }
 
     override fun customEvents(): Map<String, String>? {

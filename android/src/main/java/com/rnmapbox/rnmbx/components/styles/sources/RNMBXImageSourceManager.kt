@@ -7,6 +7,7 @@ import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.facebook.react.viewmanagers.RNMBXImageSourceManagerInterface
 import com.rnmapbox.rnmbx.utils.GeoJSONUtils.toLatLngQuad
+import com.rnmapbox.rnmbx.utils.extensions.asBooleanOrNull
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXImageSourceManagerDelegate
 
@@ -58,7 +59,7 @@ class RNMBXImageSourceManager : ViewGroupManager<RNMBXImageSource>(),
 
     @ReactProp(name = "existing")
     override fun setExisting(source: RNMBXImageSource, value: Dynamic) {
-        source.mExisting = value.asBoolean()
+        source.mExisting = value.asBooleanOrNull()
     }
 
     companion object {

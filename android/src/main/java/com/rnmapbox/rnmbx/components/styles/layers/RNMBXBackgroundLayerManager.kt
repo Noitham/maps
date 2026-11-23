@@ -7,6 +7,9 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.facebook.react.viewmanagers.RNMBXBackgroundLayerManagerInterface
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXBackgroundLayerManagerDelegate
+import com.rnmapbox.rnmbx.utils.extensions.asBooleanOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asDoubleOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asMapOrNull
 import com.rnmapbox.rnmbx.utils.extensions.asStringOrNull
 
 class RNMBXBackgroundLayerManager : ViewGroupManager<RNMBXBackgroundLayer>(),

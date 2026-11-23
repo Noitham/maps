@@ -10,6 +10,7 @@ import com.rnmapbox.rnmbx.events.constants.eventMapOf
 import javax.annotation.Nonnull
 import com.facebook.react.bridge.ReadableType
 import com.rnmapbox.rnmbx.utils.Logger
+import com.rnmapbox.rnmbx.utils.extensions.asBooleanOrNull
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXRasterSourceManagerDelegate
 
@@ -32,7 +33,7 @@ class RNMBXRasterSourceManager(reactApplicationContext: ReactApplicationContext)
 
     @ReactProp(name = "tileSize")
     override fun setTileSize(source: RNMBXRasterSource, tileSize: Dynamic) {
-        source.setTileSize(tileSize.asInt())
+        source.setTileSize(if (tileSize.isNull) null else tileSize.asInt())
     }
 
     @ReactProp(name = "prefetchZoomDelta")
@@ -58,11 +59,15 @@ class RNMBXRasterSourceManager(reactApplicationContext: ReactApplicationContext)
 
     @ReactProp(name = "existing")
     override fun setExisting(source: RNMBXRasterSource, value: Dynamic) {
-        source.mExisting = value.asBoolean()
+        source.mExisting = value.asBooleanOrNull()
     }
 
     @ReactProp(name = "sourceBounds")
     override fun setSourceBounds(source: RNMBXRasterSource, value: Dynamic) {
+        if (value.isNull) {
+            source.setSourceBounds(null)
+            return
+        }
         val array = value.asArray()
         if (value.type != ReadableType.Array || array == null || array.size() != 4) {
            Logger.e(REACT_CLASS, "source bounds must be an array with left, bottom, top, and right values")

@@ -62,17 +62,17 @@ class RNMBXMarkerViewManager(reactApplicationContext: ReactApplicationContext) :
 
     @ReactProp(name = "allowOverlap")
     override fun setAllowOverlap(markerView: RNMBXMarkerView, allowOverlap: Dynamic) {
-        markerView.setAllowOverlap(allowOverlap.asBoolean())
+        markerView.setAllowOverlap(!allowOverlap.isNull && allowOverlap.asBoolean())
     }
 
     @ReactProp(name = "allowOverlapWithPuck")
     override fun setAllowOverlapWithPuck(markerView: RNMBXMarkerView, allowOverlapWithPuck: Dynamic) {
-        markerView.setAllowOverlapWithPuck(allowOverlapWithPuck.asBoolean())
+        markerView.setAllowOverlapWithPuck(!allowOverlapWithPuck.isNull && allowOverlapWithPuck.asBoolean())
     }
 
     @ReactProp(name = "isSelected")
     override fun setIsSelected(markerView: RNMBXMarkerView, isSelected: Dynamic) {
-        markerView.setIsSelected(isSelected.asBoolean())
+        markerView.setIsSelected(!isSelected.isNull && isSelected.asBoolean())
     }
 
     @ReactProp(name = "allowZElevate")

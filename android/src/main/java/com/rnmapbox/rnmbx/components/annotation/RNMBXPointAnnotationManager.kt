@@ -91,7 +91,7 @@ class RNMBXPointAnnotationManager(reactApplicationContext: ReactApplicationConte
 
     @ReactProp(name = "draggable")
     override fun setDraggable(annotation: RNMBXPointAnnotation, draggable: Dynamic) {
-        annotation.setDraggable(draggable.asBoolean())
+        annotation.setDraggable(!draggable.isNull && draggable.asBoolean())
     }
 
     companion object {

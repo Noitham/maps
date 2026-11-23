@@ -7,6 +7,9 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.facebook.react.viewmanagers.RNMBXRasterLayerManagerInterface
 import com.facebook.react.uimanager.ViewManagerDelegate
 import com.facebook.react.viewmanagers.RNMBXRasterLayerManagerDelegate
+import com.rnmapbox.rnmbx.utils.extensions.asBooleanOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asDoubleOrNull
+import com.rnmapbox.rnmbx.utils.extensions.asMapOrNull
 import com.rnmapbox.rnmbx.utils.extensions.asStringOrNull
 
 class RNMBXRasterLayerManager : ViewGroupManager<RNMBXRasterLayer>(),
@@ -31,12 +34,12 @@ class RNMBXRasterLayerManager : ViewGroupManager<RNMBXRasterLayer>(),
 
     @ReactProp(name = "existing")
     override fun setExisting(layer: RNMBXRasterLayer, existing: Dynamic) {
-        layer.setExisting(existing.asBoolean())
+        layer.setExisting(existing.asBooleanOrNull())
     }
 
     @ReactProp(name = "sourceID")
     override fun setSourceID(layer: RNMBXRasterLayer, sourceID: Dynamic) {
-        layer.setSourceID(sourceID.asString())
+        layer.setSourceID(sourceID.asStringOrNull())
     }
 
     @ReactProp(name = "aboveLayerID")
@@ -51,22 +54,22 @@ class RNMBXRasterLayerManager : ViewGroupManager<RNMBXRasterLayer>(),
 
     @ReactProp(name = "layerIndex")
     override fun setLayerIndex(layer: RNMBXRasterLayer, layerIndex: Dynamic) {
-        layer.setLayerIndex(layerIndex.asInt())
+        layer.setLayerIndex(if (layerIndex.isNull) null else layerIndex.asInt())
     }
 
     @ReactProp(name = "minZoomLevel")
     override fun setMinZoomLevel(layer: RNMBXRasterLayer, minZoomLevel: Dynamic) {
-        layer.setMinZoomLevel(minZoomLevel.asDouble())
+        layer.setMinZoomLevel(minZoomLevel.asDoubleOrNull())
     }
 
     @ReactProp(name = "maxZoomLevel")
     override fun setMaxZoomLevel(layer: RNMBXRasterLayer, maxZoomLevel: Dynamic) {
-        layer.setMaxZoomLevel(maxZoomLevel.asDouble())
+        layer.setMaxZoomLevel(maxZoomLevel.asDoubleOrNull())
     }
 
     @ReactProp(name = "reactStyle")
     override fun setReactStyle(layer: RNMBXRasterLayer, style: Dynamic) {
-        layer.setReactStyle(style.asMap())
+        layer.setReactStyle(style.asMapOrNull())
     }
 
     @ReactProp(name = "sourceLayerID")
@@ -76,7 +79,7 @@ class RNMBXRasterLayerManager : ViewGroupManager<RNMBXRasterLayer>(),
 
     @ReactProp(name = "filter")
     override fun setFilter(layer: RNMBXRasterLayer, filterList: Dynamic) {
-        layer.setFilter(filterList.asArray())
+        layer.setFilter(if (filterList.isNull) null else filterList.asArray())
     }
 
     @ReactProp(name = "slot")
